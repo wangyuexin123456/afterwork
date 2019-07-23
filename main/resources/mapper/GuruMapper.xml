@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.GuruDao">
+<!--查询说有-->
+<select id="selectAll" resultType="Guru">
+    select guru_id guruId,name,profile,status,sex from c_guru
+    limit ${(page-1)*rows},${rows}
+</select>
+    <!--增-->
+    <insert id="insert" parameterType="Guru">
+        insert into c_guru values(#{guruId},#{name},#{profile},#{status},#{sex})
+    </insert>
+    <!--删-->
+    <delete id="delete" parameterType="String">
+        delete from c_guru where guru_id=#{guruId}
+    </delete>
+    <!--查条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_guru
+    </select>
+    <!--改-->
+    <update id="update" parameterType="Guru">
+        update c_guru
+        <set>
+            <if test="name !=null">name=#{name},</if>
+            <if test="profile !=null">profile=#{profile},</if>
+            <if test="status !=null">status =#{status},</if>
+            <if test="sex !=null">sex=#{sex}</if>
+        </set>
+        where guru_id=#{guruId}
+    </update>
+    <!--查-->
+    <select id="select" resultType="Guru">
+        select guru_id guruId,name,profile,status,sex from c_guru
+    </select>
+    <!--修改状态-->
+    <update id="updateStatus">
+        update c_guru set status=#{status} where guru_id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+<!--查询所有-->
+    <select id="selectAll" resultType="User">
+        select user_id userId,phone,salt,password,dharmaName,
+        province,city,gender,personal_sign personalSign,profile,
+        status,regist_time registTime ,guru_id guruId,head from c_user
+        limit ${(page-1)*rows},${rows}
+    </select>
+<!--修改状态-->
+    <update id="updateStatus" >
+        update c_user set status=#{status} where user_id=#{userId}
+    </update>
+ <!--增-->
+    <insert id="insert" parameterType="User">
+        insert into c_user values(#{userId},#{phone},#{password},#{salt},
+        #{dharmaName},#{province},#{city},#{gender},#{personalSign},#{profile},
+        #{status},#{registTime},#{guruId},#{head})
+    </insert>
+ <!--删-->
+    <delete id="delete" parameterType="String">
+        delete from c_user where user_id=#{userId}
+    </delete>
+ <!--查条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_user
+    </select>
+ <!--改-->
+    <update id="update" parameterType="User">
+        update c_user
+        <set>
+            <if test="phone !=null">phone=#{phone},</if>
+            <if test="password !=null">password=#{password},</if>
+            <if test="salt !=null">salt=#{salt},</if>
+            <if test="dharmaName!=null">dharmaName=#{dharmaName},</if>
+            <if test="province !=null">province =#{province},</if>
+            <if test="city !=null">city=#{city},</if>
+            <if test="gender !=null">gender=#{gender},</if>
+            <if test="personalSign !=null">personal_sign=#{personalSign},</if>
+            <if test="profile !=null">profile=#{profile},</if>
+            <if test="status !=null">status=#{status},</if>
+            <if test="registTime !=null">regist_time=#{registTime},</if>
+            <if test="guruId !=null">guru_id=#{guruId},</if>
+            <if test="head !=null">head=#{head}</if>
+        </set>
+        where user_id=#{userId}
+    </update>
+<!--查所有-->
+    <select id="select" resultType="User">
+        select user_id userId,phone,salt,password,dharmaName,
+        province,city,gender,personal_sign personalSign,profile,
+        status,regist_time registTime ,guru_id guruId,head from c_user
+    </select>
+    <!--查一个-->
+    <select id="selectOne" resultType="User">
+        select user_id userId,phone,salt,password,dharmaName,
+        province,city,gender,personal_sign personalSign,profile,
+        status,regist_time registTime ,guru_id guruId,head from c_user
+        where phone=#{phone}
+    </select>
+    <!--按时间查-->
+    <select id="selectByData" resultType="UserText">
+        select count(*) count,left(regist_time,7) data from c_user GROUP BY left(regist_time,7)
+    </select>
+    <!--按性别和地区查-->
+    <select id="selectBySex" resultType="UserText">
+        select count(*) count, province,gender from c_user GROUP BY gender,province
+    </select>
+</mapper>

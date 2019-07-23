@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CounterDao">
+<!--查询所有-->
+    <select id="selectAll" resultType="Counter">
+        select counter_id counterId,user_id userId,course_id courseId,title,count,create_time createTime from c_counter
+    </select>
+
+</mapper>

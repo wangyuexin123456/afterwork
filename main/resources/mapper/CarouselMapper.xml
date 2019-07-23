@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CarouselDao">
+<!--查询所有-->
+    <select id="selectAll" resultType="Carousel">
+        select carousel_id carouselId,title,imgPath,status,create_time createTime from c_carousel
+            limit ${(page-1)*rows},${rows}
+    </select>
+ <!--查询总条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_carousel
+    </select>
+<!--增-->
+    <insert id="insert" parameterType="Carousel">
+        insert into c_carousel(carousel_id,title,imgPath,status,create_time) values(#{carouselId},#{title},#{imgpath},#{status},#{createTime})
+    </insert>
+<!--删-->
+    <delete id="delete" parameterType="String">
+        delete from c_carousel where carousel_id=#{carouselId}
+    </delete>
+<!--改-->
+    <update id="update" parameterType="Carousel">
+        update c_carousel
+        <set>
+            <if test="title !=null">title=#{title},</if>
+            <if test="imgpath !=null">imgPath =#{imgpath},</if>
+            <if test="status !=null">status=#{status},</if>
+            <if test="createTime !=null">create_time=#{createTime}</if>
+        </set>
+        where carousel_id=#{carouselId}
+    </update>
+    <!--查一个-->
+    <select id="selectOne" resultType="Carousel" parameterType="String">
+        select * from c_carousel where carousel_id=#{id}
+    </select>
+</mapper>

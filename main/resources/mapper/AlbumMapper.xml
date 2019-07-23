@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+<!--查询所有-->
+    <select id="selectAll" resultType="Album">
+        select album_id albumId,title,cover,count,score,author,broadcast,brief,publish_time publishTime from c_album
+        limit ${(page-1)*rows},${rows}
+    </select>
+<!--增-->
+    <insert id="insert" parameterType="Album">
+        insert into c_album values(#{albumId},#{title},#{cover},#{count},#{score},#{author},#{broadcast},#{brief},#{publishTime})
+    </insert>
+<!--删-->
+    <delete id="delete" parameterType="String">
+        delete from c_album where album_id=#{albumId}
+    </delete>
+<!--查条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_album
+    </select>
+<!--改-->
+    <update id="update" parameterType="Album">
+        update c_album
+        <set>
+            <if test="title !=null">title=#{title},</if>
+            <if test="cover !=null">cover =#{cover},</if>
+            <if test="count !=null">count=#{count},</if>
+            <if test="score !=null">score=#{score},</if>
+            <if test="author !=null">author=#{author},</if>
+            <if test="broadcast !=null">broadcast=#{broadcast},</if>
+            <if test="brief !=null">brief=#{brief},</if>
+            <if test="publishTime !=null">publish_time=#{publishTime}</if>
+        </set>
+        where album_id=#{albumId}
+    </update>
+    <!--查一个-->
+    <select id="selectOne" parameterType="String" resultType="Album">
+        select album_id albumId,title,cover,count,score,author,broadcast,brief,publish_time publishTime from c_album
+        where album_id=#{id}
+    </select>
+</mapper>

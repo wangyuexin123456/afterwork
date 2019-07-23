@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+    <resultMap id="ArticleMap" type="Article">
+        <id property="articleId" column="articleId"></id>
+        <result property="guruId" column="guruId"></result>
+        <result property="title" column="title"></result>
+        <result property="content" column="content"></result>
+        <result property="publishTime" column="publishTime"></result>
+        <association property="guru" javaType="Guru">
+            <id property="guruId" column="guruId"></id>
+            <result property="name" column="name"></result>
+            <result property="profile" column="profile"></result>
+            <result property="status" column="status"></result>
+            <result property="sex" column="sex"></result>
+        </association>
+    </resultMap>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="ArticleMap">
+        select a.article_id articleId,a.guru_id guruId,a.title,a.content,a.publish_time publishTime,
+            g.guru_id guruId,g.name name, g.profile,g.status,g.sex
+            from c_article a left join c_guru g on a.guru_id=g.guru_id
+        limit ${(page-1)*rows},${rows}
+    </select>
+    <!--增-->
+    <insert id="insert" parameterType="Article">
+        insert into c_article values(#{articleId},#{guruId},#{title},#{content},#{publishTime})
+    </insert>
+    <!--删-->
+    <delete id="delete" parameterType="String">
+        delete from c_article where article_id=#{articleId}
+    </delete>
+    <!--改-->
+    <update id="update" parameterType="Article">
+        update c_article
+        <set>
+            <if test="guruId !=null">guru_id=#{guruId},</if>
+            <if test="title !=null">title=#{title},</if>
+            <if test="cover !=null">cover =#{cover},</if>
+            <if test="content !=null">content=#{content},</if>
+            <if test="content !=null">content=#{content},</if>
+            <if test="publishTime !=null">publish_time=#{publishTime}</if>
+        </set>
+        where article_id=#{articleId}
+    </update>
+    <!--查条数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from c_article
+    </select>
+    <!--按id查询-->
+    <select id="selectAllById" resultType="Article">
+        select article_id articleId,guru_id guruId,title,content,publish_time publishTime from c_article
+        where article_id=#{id}
+        limit ${(page-1)*rows},${rows}
+    </select>
+    <!--按大师id查询-->
+    <select id="selectAllId" resultType="Article">
+        select article_id articleId,guru_id guruId,title,content,publish_time publishTime from c_article
+        where guru_id=#{id}
+        limit ${(page-1)*rows},${rows}
+    </select>
+    <!--查一个-->
+    <select id="selectById" resultType="Article">
+        select article_id articleId,guru_id guruId,title,content,publish_time publishTime from c_article
+        where article_id=#{id}
+    </select>
+</mapper>
