@@ -46,6 +46,6 @@ public class AopCache {
     public void after(JoinPoint joinPoint){
         System.out.println("删除缓存");
         String id=joinPoint.getTarget().getClass().getName();
-        stringRedisTemplate.opsForHash().delete(id);
+        stringRedisTemplate.delete(id);
     }
 }
