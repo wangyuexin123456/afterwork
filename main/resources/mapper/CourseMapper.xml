@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.baizhi.dao.CourseDao">
+    <cache type="com.baizhi.cache.MyCache"></cache>
     <!--查询全部-->
     <select id="selectAll" resultType="Course">
         select course_id courseId,user_id userId,title,mark,create_time createTime from c_course
