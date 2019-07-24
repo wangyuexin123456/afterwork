@@ -22,33 +22,16 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class Test1 {
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
     @Test
     public void test1(){
-        Workbook workbook = new HSSFWorkbook();
-        Sheet sheet = workbook.createSheet();
-        Class<User> userClass = User.class;
-        Field[] fields = userClass.getDeclaredFields();
-        for(int i=0;i<fields.length;i++){
-            String name=fields[i].getName();
-            Row row = sheet.createRow(0);
-            Cell cell = row.createCell(i);
-            cell.setCellValue(name);
-        }
-        List<User> users = userDao.selectAll(1, 5);
-        for(int i=0;i<fields.length;i++){
-            for(int j=0;j<users.size();j++){
-                User user = users.get(j);
-                Class<? extends User> aClass = user.getClass();
-                Field[] fields1 = aClass.getFields();
-                Row row = sheet.createRow(i+1);
-               for(int z=0;z<fields1.length;z++){
-                   Cell cell = row.createCell(z);
-               }
-            }
-        }
-
-
-
+        PageNum<User> user = userService.query(1, 5);
+        System.out.println(user);
     }
+    @Test
+    public void test2(){
+        userService.delete("0d2f101a-396f-4801-a81c-6454d0478140");
+    }
+
+
 }
