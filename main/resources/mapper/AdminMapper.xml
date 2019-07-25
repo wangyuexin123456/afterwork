@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.baizhi.dao.AdminDao">
-    <cache type="com.baizhi.cache.MyCache"></cache>
+    <!--<cache type="com.baizhi.cache.MyCache"></cache>-->
+    <resultMap id="AdminMap" type="Admin">
+        <id column="adminId" property="adminId"></id>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <collection property="roles" ofType="Role">
+            <id column="roleId" property="roleId"/>
+            <result column="roleName" property="roleName"/>
+            <result column="cAdminId" property="adminId"/>
+            <collection property="authorities" ofType="Authority">
+                <id column="authorityId" property="authorityId"></id>
+                <result column="authorityNmae" property="authorityName"/>
+                <result column="eRoleId" property="roleId"/>
+            </collection>
+        </collection>
+    </resultMap>
 <!--查询所有-->
-    <select id="select" resultType="Admin">
+    <select id="select" resultMap="AdminMap">
         select admin_id adminId,username,password from c_admin where username=#{username} and password=#{password}
     </select>
-
+<!--按用户名查找-->
+    <select id="selectBy" resultMap="AdminMap">
+        select a.admin_id adminId,a.username,a.password,a.salt,c.role_id roleId,c.role_name roleName,c.admin_id cAdminId,e.authority_id authorityId,
+            e.authority_name authorityName,e.role_id eRoleId from c_admin a right join c_admin_role b on a.admin_id=b.admin_id right join c_role c
+            on b.role_id=c.role_id left join c_role_authority d on c.role_id=d.role_id left join c_authority e on d.authority_id=e.authority_id
+            where a.username=#{username}
+    </select>
+    <!--添加-->
+    <insert id="insert" parameterType="Admin">
+        insert into c_admin values(#{adminId},#{username},#{password},#{salt})
+    </insert>
 </mapper>

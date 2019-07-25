@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserDao extends BaseDao<User>{
-
     @Override
     List<User> selectAll(@Param("page") int page,@Param("rows") int rows);
 
