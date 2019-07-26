@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -12,7 +13,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                    欢迎：${sessionScope.admin.username}
+                    欢迎：<shiro:principal></shiro:principal>
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -24,7 +25,7 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                <a href="${pageContext.request.contextPath}/admin/logout" class="dropdown-toggle" data-toggle="dropdown" >
                     退出登录
                     <span class="glyphicon glyphicon-log-out"></span>
                 </a>

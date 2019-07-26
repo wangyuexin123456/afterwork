@@ -2,6 +2,10 @@ package com.baizhi.controller;
 
 import com.baizhi.entity.Admin;
 import com.baizhi.service.AdminService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
@@ -19,12 +23,24 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
     @RequestMapping("login")
-    @ResponseBody
-    public Map<String,Object> login(Admin admin, String code){
-        System.out.println(admin);
-        System.out.println(code);
-        //System.out.println(adminService.query(admin,code));
-       return adminService.query(admin,code);
+    public String login(Admin admin, String code){
+        //获取主题
+        Subject subject = SecurityUtils.getSubject();
+        //获取令牌
+        UsernamePasswordToken token = new UsernamePasswordToken(admin.getUsername(),admin.getPassword());
+        try {
+            subject.login(token);
+            return "jsp/main/main";
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            return "jsp/login";
+        }
 
+    }
+    @RequestMapping("logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "jsp/login";
     }
 }

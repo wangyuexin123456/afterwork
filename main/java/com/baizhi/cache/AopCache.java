@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-@Configuration
-@Aspect
+/*@Configuration
+@Aspect*/
 public class AopCache {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;

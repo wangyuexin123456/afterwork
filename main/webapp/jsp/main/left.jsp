@@ -1,7 +1,9 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
 <div class="panel-group" id="group1">
+    <shiro:hasRole name="vip">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title" >
@@ -70,4 +72,19 @@
             </div>
         </div>
     </div>
+    </shiro:hasRole>
+    <shiro:hasRole name="svip">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"data-toggle="collapse" data-target="#collapse6"  data-parent="#group1">
+                <a href="#">管理员</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse6">
+            <div class="panel-body list-group">
+                <a class="list-group-item" href="#">管理员管理</a>
+            </div>
+        </div>
+    </div>
+    </shiro:hasRole>
 </div>

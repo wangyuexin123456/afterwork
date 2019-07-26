@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<!doctype html>
+<%@page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
@@ -17,7 +16,7 @@
     <script src="${pageContext.request.contextPath}/boot/js/ajaxfileupload.js"></script>
     <title></title>
     <script type="text/javascript">
-        function changeImage(){
+       /* function changeImage(){
             window.location.href="${pageContext.request.contextPath}/jsp/login.jsp";
         }
        function submitForm(){
@@ -29,14 +28,14 @@
                     $("#span").text(date.message);
                 }
             },"json")
-        }
+        }*/
     </script>
 </head>
 <body>
     <div>
         <h3 align="center">登录</h3>
     </div>
-    <form id="login" action="javascript:void(0) ">
+    <form id="login" method="post" action="${pageContext.request.contextPath}/admin/login">
     <div class="form-group">
         <label for="username">用户名</label>
         <input type="text" name="username" class="form-control" id="username">
@@ -45,8 +44,8 @@
         <label for="password">密码</label>
         <input type="password"  name="password" class="form-control" id="password">
     </div>
-    <div class="form-group">
-        <div class="code" style="width:100px;">
+    <%--<div class="form-group">--%>
+       <%-- <div class="code" style="width:100px;">
            验证码： <input type="text" name="code" id="code" />
         </div>
                 <a class="code_pic" id="vcodeImgWrap" name="change_code_img" href="javascript:void(0);">
@@ -54,9 +53,9 @@
                 </a>
                 <a href="javascript:changeImage()">换张图</a>
                 <span  style="display: none;"></span>
-        </div>
-    </div>
-    <button onclick="submitForm()" class="btn btn-default">submit</button>
+        </div>--%>
+   <%-- </div>--%>
+    <input type="submit" class="btn btn-default" value="submit"></input>
         <span id="span" style="color: red"></span>
 </form>
 </body>

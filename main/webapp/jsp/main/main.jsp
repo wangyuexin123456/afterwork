@@ -1,4 +1,5 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!doctype html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
